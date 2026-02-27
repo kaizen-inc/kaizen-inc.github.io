@@ -1,8 +1,1153 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Kaizen, Inc</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaizen, Inc. — Continuous Improvement, Productized</title>
+    <meta name="description" content="Kaizen Inc. is an ambitious startup building modern developer tools and libraries using cutting-edge technologies. Join us on our journey of continuous improvement.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon (GitHub org avatar) -->
+    <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/78226888?v=4">
+
+    <style>
+        /* ===== CSS Reset & Variables ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-card: #16161f;
+            --bg-card-hover: #1c1c28;
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b8;
+            --text-muted: #6b6b80;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --accent-glow: rgba(108, 92, 231, 0.3);
+            --gradient-1: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            --gradient-2: linear-gradient(135deg, #6c5ce7, #00cec9);
+            --gradient-hero: linear-gradient(160deg, rgba(108,92,231,0.12) 0%, transparent 50%);
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(108,92,231,0.3);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* ===== Navigation ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.8);
+            border-bottom: 1px solid transparent;
+        }
+
+        .navbar.scrolled {
+            border-bottom-color: var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            border-radius: 1px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: var(--gradient-1) !important;
+            color: #fff !important;
+            padding: 0.55rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 2px 12px var(--accent-glow);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .nav-cta::after { display: none !important; }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(108,92,231,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(0,206,201,0.05) 0%, transparent 50%);
+            animation: heroFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(2%, -2%) rotate(1deg); }
+            66% { transform: translate(-1%, 1%) rotate(-0.5deg); }
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(108,92,231,0.1);
+            border: 1px solid rgba(108,92,231,0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-light);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.75rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: var(--font);
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: #fff;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        /* ===== Section Base ===== */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        /* ===== About Section ===== */
+        #about {
+            background: var(--bg-secondary);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2.25rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .about-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .about-card:hover::before { opacity: 1; }
+
+        .about-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(108,92,231,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            font-size: 1.3rem;
+        }
+
+        .about-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .about-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ===== Projects Section ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-icon {
+            font-size: 1.5rem;
+        }
+
+        .project-arrow {
+            color: var(--text-muted);
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .project-card:hover .project-arrow {
+            color: var(--accent-light);
+            transform: translate(3px, -3px);
+        }
+
+        .project-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: var(--mono);
+            letter-spacing: -0.02em;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            flex-grow: 1;
+            margin-bottom: 1.25rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-weight: 600;
+            background: rgba(108,92,231,0.1);
+            color: var(--accent-light);
+            border: 1px solid rgba(108,92,231,0.15);
+        }
+
+        .tag-lang {
+            background: rgba(0,206,201,0.1);
+            color: #00cec9;
+            border-color: rgba(0,206,201,0.15);
+        }
+
+        /* ===== Tech Stack Section ===== */
+        #tech {
+            background: var(--bg-secondary);
+        }
+
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.5rem;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .tech-item:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .tech-item svg, .tech-item img {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* ===== Philosophy Section ===== */
+        .philosophy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .kaizen-meaning {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kaizen-meaning::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-hero);
+            pointer-events: none;
+        }
+
+        .kaizen-jp {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .kaizen-romanji {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .kaizen-def {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .value-item {
+            padding: 1.5rem;
+        }
+
+        .value-item .icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .value-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== CTA Section ===== */
+        .cta-section {
+            background: var(--bg-secondary);
+        }
+
+        .cta-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(108,92,231,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-left svg { width: 24px; height: 24px; }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover { color: var(--accent-light); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10,10,15,0.98);
+                padding: 1.5rem 2rem;
+                border-bottom: 1px solid var(--border);
+                gap: 1rem;
+            }
+            .mobile-toggle { display: block; }
+            .hero-stats { flex-direction: column; gap: 1.5rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .cta-box { padding: 3rem 1.5rem; }
+        }
+
+        /* ===== Animations ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
+
 <body>
-    <p>Official site of Kaizen, Inc</p>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#logo-grad)"/>
+                    <path d="M9 22L16 10L19 16L23 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="logo-grad" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#6c5ce7"/>
+                            <stop offset="1" stop-color="#a29bfe"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                Kaizen, Inc.
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#philosophy">Philosophy</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#tech">Tech Stack</a></li>
+                <li><a href="https://github.com/kaizen-inc" target="_blank" class="nav-cta">GitHub ↗</a></li>
+            </ul>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                Open Source Startup
+            </div>
+            <h1>
+                Building the Future<br>
+                <span class="gradient-text">One Improvement at a Time</span>
+            </h1>
+            <p>
+                Kaizen Inc. is an ambitious startup productizing modern developer tools and libraries. We believe in continuous improvement — shipping elegant, open-source solutions for the modern tech ecosystem.
+            </p>
+            <div class="hero-actions">
+                <a href="https://github.com/kaizen-inc" target="_blank" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    Explore on GitHub
+                </a>
+                <a href="#projects" class="btn btn-secondary">
+                    View Projects ↓
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">9+</div>
+                    <div class="stat-label">Open Source Repos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">2021</div>
+                    <div class="stat-label">Founded</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">Kotlin</div>
+                    <div class="stat-label">Primary Language</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">Who We Are</span>
+                <h2 class="section-title">An Ambitious Startup with a Clear Mission</h2>
+                <p class="section-desc">We build modern developer tools and libraries that solve real problems — and we do it all in the open.</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-card fade-in">
+                    <div class="about-icon">🚀</div>
+                    <h3>Product-First Mindset</h3>
+                    <p>We don't just write code — we productize. Every library and plugin we build is designed to be a complete, polished product that developers love to use.</p>
+                </div>
+                <div class="about-card fade-in">
+                    <div class="about-icon">🔧</div>
+                    <h3>Developer Tooling</h3>
+                    <p>From Gradle plugins to IntelliJ extensions, we focus on building tools that integrate into the workflows developers already use, making them more productive.</p>
+                </div>
+                <div class="about-card fade-in">
+                    <div class="about-icon">🌐</div>
+                    <h3>Open Source DNA</h3>
+                    <p>Everything we build is open source. We believe in transparency, collaboration, and the power of community-driven development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">Our Philosophy</span>
+                <h2 class="section-title">The Spirit of Kaizen</h2>
+            </div>
+
+            <div class="philosophy-content">
+                <div class="kaizen-meaning fade-in">
+                    <div class="kaizen-jp">改善</div>
+                    <div class="kaizen-romanji">Kaizen</div>
+                    <p class="kaizen-def">
+                        A Japanese philosophy meaning <strong>"change for the better"</strong> — the practice of continuous improvement. Small, consistent improvements compound into extraordinary results.
+                    </p>
+                </div>
+
+                <div class="values-grid fade-in">
+                    <div class="value-item">
+                        <div class="icon">🎯</div>
+                        <h4>Iterate Relentlessly</h4>
+                        <p>Ship early, learn fast, and improve with every cycle</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="icon">💡</div>
+                        <h4>Modern by Default</h4>
+                        <p>We adopt cutting-edge technologies and best practices from day one</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="icon">🤝</div>
+                        <h4>Community Driven</h4>
+                        <p>Built with the community, for the community — contributions welcome</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="icon">⚡</div>
+                        <h4>Developer Experience</h4>
+                        <p>Every product is crafted with the developer's experience in mind</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">Our Work</span>
+                <h2 class="section-title">Open Source Projects</h2>
+                <p class="section-desc">Tools, libraries, and plugins built with modern technologies for the Kotlin and JVM ecosystem.</p>
+            </div>
+
+            <div class="projects-grid">
+                <a href="https://github.com/kaizen-inc/Sprout" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <span class="project-icon">🌱</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <h3>Sprout</h3>
+                    <p>A library to generate boilerplate code using Google KSP for Spring Boot services. Write less, ship more.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-lang">Kotlin</span>
+                        <span class="tag">Spring Boot</span>
+                        <span class="tag">KSP</span>
+                    </div>
+                </a>
+
+                <a href="https://github.com/kaizen-inc/postman-gradle-plugin" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <span class="project-icon">📮</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <h3>postman-gradle-plugin</h3>
+                    <p>A Gradle plugin to run Postman collections directly from your build pipeline. Automate API testing with ease.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-lang">Kotlin</span>
+                        <span class="tag">Gradle</span>
+                        <span class="tag">Postman</span>
+                        <span class="tag">Newman</span>
+                    </div>
+                </a>
+
+                <a href="https://github.com/kaizen-inc/podium" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <span class="project-icon">🏛️</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <h3>podium</h3>
+                    <p>A base Kotlin library for Retrofit2-based HTTP clients. Simplify your networking layer with clean abstractions.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-lang">Kotlin</span>
+                        <span class="tag">Retrofit2</span>
+                        <span class="tag">HTTP</span>
+                    </div>
+                </a>
+
+                <a href="https://github.com/kaizen-inc/anukarma-editor" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <span class="project-icon">✏️</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <h3>anukarma-editor</h3>
+                    <p>An IntelliJ IDEA plugin for the Anukarma framework. Bringing IDE-first development experience to the ecosystem.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-lang">Kotlin</span>
+                        <span class="tag">IntelliJ</span>
+                        <span class="tag">Plugin</span>
+                    </div>
+                </a>
+
+                <a href="https://github.com/kaizen-inc/automata" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <span class="project-icon">🤖</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <h3>automata</h3>
+                    <p>Automation framework powering intelligent workflows. Build, automate, and scale your processes effortlessly.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-lang">Kotlin</span>
+                        <span class="tag">Automation</span>
+                    </div>
+                </a>
+
+                <a href="https://github.com/kaizen-inc/Versioner" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <span class="project-icon">🏷️</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <h3>Versioner</h3>
+                    <p>A Gradle plugin for generating versions with configurable formats. Bring consistency to your release pipeline.</p>
+                    <div class="project-tags">
+                        <span class="tag">Gradle Plugin</span>
+                        <span class="tag">Versioning</span>
+                    </div>
+                </a>
+
+                <a href="https://github.com/kaizen-inc/Jetpack-Compose-Pagination3" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <span class="project-icon">📱</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <h3>Jetpack-Compose-Pagination3</h3>
+                    <p>A Jetpack Compose example implementing pagination with the Paging3 library. Modern Android, simplified.</p>
+                    <div class="project-tags">
+                        <span class="tag tag-lang">Kotlin</span>
+                        <span class="tag">Compose</span>
+                        <span class="tag">Paging3</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="tech">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-label">Technology</span>
+                <h2 class="section-title">Our Tech Stack</h2>
+                <p class="section-desc">We leverage modern, battle-tested technologies to build robust and scalable products.</p>
+            </div>
+
+            <div class="tech-grid fade-in">
+                <div class="tech-item">
+                    <svg viewBox="0 0 128 128" width="28" height="28"><linearGradient id="kt-a" x1="53.86" x2="24.237" y1="86.714" y2="117.019" gradientTransform="matrix(1 0 0 -1 0 128)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0095D5"/><stop offset=".342" stop-color="#238AD9"/><stop offset=".7" stop-color="#557BDE"/><stop offset="1" stop-color="#7472E2"/></linearGradient><path fill="url(#kt-a)" d="M0 113.97L52.86 59.15 0 0h30.31l52.79 59.15-52.79 54.82z"/><linearGradient id="kt-b" x1="100.952" x2="40.569" y1="55.799" y2="119.783" gradientTransform="matrix(1 0 0 -1 0 128)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0095D5"/><stop offset=".113" stop-color="#3C83DC"/><stop offset=".264" stop-color="#6D74E1"/><stop offset=".421" stop-color="#806DEE"/><stop offset=".596" stop-color="#8B69F5"/><stop offset=".833" stop-color="#9069F7"/></linearGradient><path fill="url(#kt-b)" d="M83.1 0L0 113.97h30.31L113.31 0z"/></svg>
+                    Kotlin
+                </div>
+                <div class="tech-item">
+                    <svg viewBox="0 0 128 128" width="28" height="28"><path fill="#68BC71" d="M62.55 2.028L6.876 33.073v62.09L62.55 126.21l55.678-31.048V33.073L62.55 2.028zm0 12.058l45.678 25.475v50.952L62.55 115.988 16.876 90.513V39.561L62.55 14.086z"/><path fill="#68BC71" d="M46.59 72.89l-8.48 4.73V56.2l24.44-13.63 24.44 13.63v27.26L62.55 97.09 46.59 88.18v-15.29z"/></svg>
+                    Spring Boot
+                </div>
+                <div class="tech-item">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="#02303A"><path d="M15.037 2.833a4.08 4.08 0 0 0-2.66 1.062l-.003.003-9.021 8.61a2.97 2.97 0 0 0 0 4.285l.363.347a3.168 3.168 0 0 0 4.232.106l7.39-6.398a1.088 1.088 0 0 1 1.453.037l.125.119a1.018 1.018 0 0 1 0 1.47l-7.39 7.057a4.08 4.08 0 0 0 0 5.89l.5.477a4.355 4.355 0 0 0 5.82.146l10.162-8.799a2.97 2.97 0 0 0 0-4.285l-.363-.347a3.168 3.168 0 0 0-4.232-.106l-7.39 6.398a1.088 1.088 0 0 1-1.453-.037l-.125-.119a1.018 1.018 0 0 1 0-1.47l7.39-7.057a4.08 4.08 0 0 0 0-5.89l-.5-.477a4.355 4.355 0 0 0-3.16-1.222z"/></svg>
+                    Gradle
+                </div>
+                <div class="tech-item">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="#3DDC84"><path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V7H6v11zM3.5 7C2.67 7 2 7.67 2 8.5v7c0 .83.67 1.5 1.5 1.5S5 16.33 5 15.5v-7C5 7.67 4.33 7 3.5 7zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85.55 12.95.25 12 .25c-.95 0-1.85.3-2.64.78L7.88.55c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C7.23 3.6 6.25 5.23 6.25 7h11.5c0-1.77-.98-3.4-2.22-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/></svg>
+                    Android
+                </div>
+                <div class="tech-item">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="#000"><path d="M13.74 4.23c-.84-1-1.57-2-1.71-2.22H12c-.14.21-.87 1.22-1.71 2.22-7.2 9.19 1.14 15.39 1.14 15.39l.07.05c.06.95.22 2.33.22 2.33h.56s.14-1.38.21-2.33l.07-.05s8.34-6.2 1.18-15.39zM12 17.07c-.24 0-.44-.41-.44-.44a.44.44 0 0 1 .88 0c0 .03-.2.44-.44.44z" fill="#6c5ce7"/></svg>
+                    Jetpack Compose
+                </div>
+                <div class="tech-item">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="#FF6B00"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-.8 3.6h1.6v1.6h-1.6V3.6zm-3.94 3.94h1.6v8h-1.6v-8zm3.94 0h1.6v8h-1.6v-8zm3.94 0h1.6v8h-1.6v-8zM7.26 16.46h9.6v1.6h-9.6v-1.6z" fill="#087CFA"/></svg>
+                    IntelliJ Platform
+                </div>
+                <div class="tech-item">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="#FF6C37"><path d="M13.527.099C6.955-.744.942 3.9.099 10.473c-.843 6.572 3.8 12.584 10.373 13.428 6.573.843 12.587-3.801 13.428-10.374C24.744 6.955 20.101.943 13.527.099zm2.471 7.485a.855.855 0 0 0-.593.25l-4.453 4.453-.307-.307-.643-.643 4.453-4.453a.861.861 0 0 1 1.214 0l.329.329a.855.855 0 0 1 0 1.214l-.001-.001a.88.88 0 0 0 .001-.842z"/></svg>
+                    Postman / Newman
+                </div>
+                <div class="tech-item">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="#F05032"><path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.66 2.66c.645-.222 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.72.719-1.886.719-2.605 0-.538-.536-.656-1.342-.354-2.001l-2.481-2.481v6.529c.175.088.339.199.484.346.72.72.72 1.884 0 2.604-.72.719-1.884.719-2.604 0-.72-.72-.72-1.885 0-2.604.18-.18.388-.317.612-.411V8.278c-.224-.094-.432-.23-.612-.41-.535-.534-.657-1.334-.357-1.997L7.635 3.145.453 10.326c-.604.604-.604 1.582 0 2.186l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582-.003-2.187"/></svg>
+                    Git
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="join">
+        <div class="container">
+            <div class="cta-box fade-in">
+                <h2>Ready to Build Something<br><span class="gradient-text">Extraordinary?</span></h2>
+                <p>We're always looking for passionate developers, contributors, and collaborators. Join us in our mission of continuous improvement.</p>
+                <div class="cta-actions">
+                    <a href="https://github.com/kaizen-inc" target="_blank" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        Start Contributing
+                    </a>
+                    <a href="mailto:kaizen.inc@protonmail.com" class="btn btn-secondary">
+                        ✉️ Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <rect width="32" height="32" rx="8" fill="url(#footer-grad)"/>
+                    <path d="M9 22L16 10L19 16L23 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="footer-grad" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#6c5ce7"/>
+                            <stop offset="1" stop-color="#a29bfe"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                © 2025 Kaizen, Inc. — Continuous Improvement.
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/kaizen-inc" target="_blank">GitHub</a>
+                <a href="#projects">Projects</a>
+                <a href="#about">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileToggle.textContent = '☰';
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
